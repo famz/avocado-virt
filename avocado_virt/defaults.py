@@ -63,8 +63,8 @@ except SettingsError:
 guest_user = settings.get_value('virt.guest', 'user', default='root')
 guest_password = settings.get_value('virt.guest', 'password', default='123456')
 
-disable_restore_image_test = settings.get_value('virt.restore', 'disable_for_test', default=False, key_type=bool)
-disable_restore_image_job = settings.get_value('virt.restore', 'disable_for_job', default=False, key_type=bool)
+disable_restore_image_test = settings.get_value('virt.restore', 'disable_for_test', default=True, key_type=bool)
+disable_restore_image_job = settings.get_value('virt.restore', 'disable_for_job', default=True, key_type=bool)
 
 screendump_thread_enable = settings.get_value('virt.screendumps', 'enable', default=False, key_type=bool)
 screendump_thread_interval = settings.get_value('virt.screendumps', 'interval', default=0.5, key_type=float)

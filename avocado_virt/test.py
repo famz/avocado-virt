@@ -65,5 +65,5 @@ class VirtTest(Test):
         self.vm.devices.add_nodefaults()
         self.vm.devices.add_vga('std')
         self.vm.devices.add_vnc()
-        self.vm.devices.add_drive()
+        self.vm.devices.add_drive(copy=True)
         self.vm.devices.add_net()

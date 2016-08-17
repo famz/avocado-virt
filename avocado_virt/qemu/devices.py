@@ -18,6 +18,10 @@
 # Author: Stefan Hajnoczi <stefanha@redhat.com>
 # Author: Ruda Moura <rmoura@redhat.com>
 
+import os
+import shutil
+import tempfile
+from avocado.core import data_dir
 from avocado.utils import network
 from avocado.utils.data_structures import Borg
 from . import path
@@ -374,7 +378,8 @@ class QemuDevices(object):
         self.add_device('fd', fd=fd, fdset=fdset, opaque=opaque, opts=opts)
 
     def add_drive(self, drive_file=None, device_type='virtio-blk-pci',
-                  device_id='avocado_image', drive_id='device_avocado_image'):
+                  device_id='avocado_image', drive_id='device_avocado_image',
+                  copy=False):
         """
         Add a drive device to the VM.
 
@@ -387,6 +392,13 @@ class QemuDevices(object):
         """
         if drive_file is None:
             drive_file = self.params.get('image_path', '/plugins/virt/guest/*')
+        if copy:
+            basename = os.path.basename(drive_file)
+            dest = tempfile.mktemp(dir=data_dir.get_tmp_dir(),
+                                   suffix="-" + basename)
+            shutil.copy(drive_file, dest)
+            drive_file = dest
+
         self.add_device('drive', drive_file=drive_file, device_type=device_type,
                         device_id=device_id, drive_id=drive_id)
 
